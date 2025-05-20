@@ -20,6 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
+import com.example.geoworld.ui.navigation.GeoWorldNavHost
 import com.example.geoworld.ui.screens.MainMenuScreen
 import com.example.geoworld.ui.theme.GeoWorldTheme
 
@@ -28,9 +30,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GeoWorldTheme {
-                Surface {
-                    MainMenuScreen()
-                }
+                val navController = rememberNavController()
+                GeoWorldNavHost(navController = navController)
             }
         }
     }
