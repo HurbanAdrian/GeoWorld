@@ -6,6 +6,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -20,6 +21,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.getValue
@@ -28,13 +30,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.geoworld.data.database.AppDatabase
+import com.example.geoworld.data.database.entity.PlayerStatsEntity
+import com.example.geoworld.data.repository.PlayerStatsRepository
 import com.example.geoworld.model.Country
 import com.example.geoworld.model.GameMode
 import com.example.geoworld.model.Region
 import com.example.geoworld.viewmodel.QuizViewModel
+import com.example.geoworld.viewmodel.StatsViewModel
+import com.example.geoworld.viewmodel.StatsViewModelFactory
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -45,7 +55,29 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
     var selectedAnswer by remember { mutableStateOf<Country?>(null) }
     var showResult by remember { mutableStateOf(false) }
 
+    val context = LocalContext.current
+    val statsViewModel: StatsViewModel = viewModel(
+        factory = StatsViewModelFactory(
+            PlayerStatsRepository(AppDatabase.getInstance(context).playerStatsDao())
+        )
+    )
+
     question?.let { q ->
+        LaunchedEffect(showResult) {
+            if (showResult && selectedAnswer != null) {
+                val isCorrect = selectedAnswer == question?.country
+                delay(300)          // mierne oneskorenie na aktualizovanie stavu
+                val stat = PlayerStatsEntity(
+                    score = viewModel.score.intValue,
+                    correctAnswers = if (isCorrect) 1 else 0,
+                    date = System.currentTimeMillis(),
+                    region = region.name,
+                    streak = viewModel.streak.value,
+                    livesLeft = viewModel.lives.value
+                )
+                statsViewModel.insertStat(stat)
+            }
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -55,6 +87,16 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
             verticalArrangement = Arrangement.Top
         ) {
             Spacer(modifier = Modifier.height(8.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("❤️ Životy: ${viewModel.lives.value}")
+                Text("🏆 Skóre: ${viewModel.score.intValue}")
+            }
 
             Text(
                 text = when (mode) {
@@ -90,6 +132,7 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
                         .padding(vertical = 6.dp)
                         .height(100.dp)
                         .clickable(enabled = !showResult) {
+                            viewModel.answerSelected(option)
                             selectedAnswer = option
                             showResult = true
                         }

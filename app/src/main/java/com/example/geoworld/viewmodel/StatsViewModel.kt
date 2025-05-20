@@ -25,4 +25,11 @@ class StatsViewModel(private val repository: PlayerStatsRepository) : ViewModel(
             loadStats()
         }
     }
+
+    fun clearStats() {
+        viewModelScope.launch {
+            repository.clearStats()
+            loadStats()             // znvou nacitanie
+        }
+    }
 }

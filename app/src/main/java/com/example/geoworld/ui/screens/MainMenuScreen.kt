@@ -1,14 +1,10 @@
 package com.example.geoworld.ui.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.geoworld.viewmodel.MainViewModel
-import androidx.compose.ui.res.painterResource
 import android.app.Activity
 import androidx.compose.ui.platform.LocalContext
 

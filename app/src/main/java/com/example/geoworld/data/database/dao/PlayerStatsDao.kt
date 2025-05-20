@@ -10,4 +10,7 @@ interface PlayerStatsDao {
 
     @Query("SELECT * FROM player_stats ORDER BY date DESC")
     suspend fun getAll(): List<PlayerStatsEntity>
+
+    @Query("DELETE FROM player_stats")
+    suspend fun deleteAllStats()
 }

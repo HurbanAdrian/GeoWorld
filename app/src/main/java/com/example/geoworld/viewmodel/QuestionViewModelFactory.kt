@@ -2,7 +2,6 @@ package com.example.geoworld.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.geoworld.data.repository.QuestionRepository
 import com.example.geoworld.model.Region
 
 
