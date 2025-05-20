@@ -3,7 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 
-    id("com.google.devtools.ksp") version "1.9.21-1.0.16"
+    //alias(libs.plugins.ksp)
+    kotlin("kapt")
 }
 
 android {
@@ -42,9 +43,14 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.room.ktx)
-    ksp(libs.androidx.room.compiler.v261)
+    //implementation(libs.androidx.room.runtime)
+    //implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime.v270alpha03)
+    implementation(libs.androidx.room.ktx.v270alpha03)
+    //noinspection KaptUsageInsteadOfKsp
+    kapt(libs.androidx.room.compiler.v270alpha03)
+    //noinspection KaptUsageInsteadOfKsp
+    //kapt(libs.androidx.room.compiler.v261)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     implementation(libs.androidx.core.ktx)

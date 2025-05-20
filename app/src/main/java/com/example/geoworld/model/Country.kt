@@ -1,4 +1,8 @@
 package com.example.geoworld.model
 
-class Country {
-}
+data class Country(
+    val name: String,
+    val isoCode: String,
+    val flagResId: Int,
+    val mapResId: Int
+)
