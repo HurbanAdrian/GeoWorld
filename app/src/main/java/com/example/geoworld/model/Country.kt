@@ -4,5 +4,6 @@ data class Country(
     val name: String,
     val isoCode: String,
     val flagResId: Int,
-    val mapResId: Int
+    val mapResId: Int,
+    val continent: String
 )

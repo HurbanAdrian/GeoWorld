@@ -15,6 +15,7 @@ roomCompilerVersion = "2.7.0-alpha03"
 roomKtx = "2.7.1"
 roomKtxVersion = "2.7.0-alpha03"
 roomRuntime = "2.7.0-alpha03"
+mediationTestSuite = "3.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
