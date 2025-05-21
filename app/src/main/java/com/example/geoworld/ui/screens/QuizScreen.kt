@@ -50,7 +50,18 @@ import com.example.geoworld.viewmodel.StatsViewModel
 import com.example.geoworld.viewmodel.StatsViewModelFactory
 import kotlinx.coroutines.delay
 
-
+/**
+ * Obrazovka kvízu pre režimy „vlajky“ alebo „slepá mapa“.
+ *
+ * Zobrazí otázku (štát) a výber možností vo forme obrázkov, hodnotí správnosť,
+ * zobrazuje skóre a umožňuje používateľovi pokračovať alebo reštartovať hru.
+ *
+ * @param region Vybraný región (napr. Europe, Asia)
+ * @param mode Herný režim (vlajky alebo mapy)
+ * @param onNavigate Callback na navigáciu medzi obrazovkami
+ *
+ * Upravy na triede s chatGPT -> napr. návrh s LaunchedEffect
+ */
 @Composable
 fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
     val viewModel: QuizViewModel = viewModel(
@@ -62,6 +73,7 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
     var showResult by viewModel.showResult
 
     val context = LocalContext.current
+    // Spustí službu pre záznam štatistiky po konci hry
     LaunchedEffect(viewModel.gameOver.value) {              // ako side effect, pri zmene gameOver spusti raz tento blok, ide ako coroutina
         if (viewModel.gameOver.value) {
             val intent = Intent(context, StatsService::class.java)
@@ -70,13 +82,16 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
         }
     }
 
+    // ViewModel pre štatistiky
     val statsViewModel: StatsViewModel = viewModel(
         factory = StatsViewModelFactory(
             PlayerStatsRepository(AppDatabase.getInstance(context).playerStatsDao())
         )
     )
 
+    // Zobrazuj otázku, ak existuje
     question?.let { q ->
+        // Uloží štatistiku po zodpovedaní otázky
         LaunchedEffect(showResult) {
             if (showResult && selectedAnswer != null) {
                 val isCorrect = selectedAnswer == question?.country
@@ -92,6 +107,7 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
                 statsViewModel.insertStat(stat)
             }
         }
+        // Layout celej obrazovky
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -103,6 +119,7 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
         ) {
             Spacer(modifier = Modifier.height(8.dp))
 
+            // Životy a skóre
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -113,6 +130,7 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
                 Text("${stringResource(R.string.score_label)} ${viewModel.score.intValue}")
             }
 
+            // Text otázky
             Text(
                 text = when (mode) {
                     GameMode.FLAGS -> stringResource(R.string.question_flag_prompt)
@@ -123,10 +141,12 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
 
             Spacer(modifier = Modifier.height(4.dp))
 
+            // Názov krajiny
             Text(text = stringResource(id = q.country.nameResId), fontSize = 28.sp)
 
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Možnosti odpovede
             q.options.forEach { option ->
                 val isCorrect = option == q.country
                 val borderColor = when {
@@ -168,6 +188,7 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
+            // Ovládacie tlačidlá
             if (viewModel.gameOver.value) {
                 Text(text = stringResource(R.string.game_over_label), fontSize = 20.sp, color = Color.Red)
                 Spacer(modifier = Modifier.height(12.dp))

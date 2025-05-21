@@ -10,32 +10,49 @@ import com.example.geoworld.model.Region
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
+/**
+ * ViewModel zodpovedný za logiku kvízovej hry.
+ *
+ * Udržiava stav hry vrátane skóre, životov, otázok, vybranej odpovede a výsledku.
+ * Otázky sú generované náhodne zo zoznamu krajín podľa vybraného regiónu.
+ *
+ * @param region Región, z ktorého sa budú generovať krajiny pre otázky.
+ */
 class QuizViewModel(private val region: Region) : ViewModel() {
-
+    // Náhodne zamiešaný zoznam krajín z vybraného regiónu
     private val countries = CountryRepository.getCountriesByRegion(region).shuffled()
 
+    // Stavové premenné pre sledovanie priebehu hry
     val score = mutableIntStateOf(0)
     val streak = mutableIntStateOf(0)
     val lives = mutableIntStateOf(3)
     val correctAnswers = mutableIntStateOf(0)
     val gameOver = mutableStateOf(false)
 
+    // Aktuálna otázka (s možnosťami a správnou odpoveďou)
     private val _currentQuestion = MutableStateFlow<QuizQuestion?>(null)
     val currentQuestion: StateFlow<QuizQuestion?> = _currentQuestion
 
+    // Používateľova vybraná odpoveď a stav, či sa má ukázať výsledok
     val selectedAnswer = mutableStateOf<Country?>(null)
     val showResult = mutableStateOf(false)
 
     init {
+        // Generovanie prvej otázky pri inicializácii - s pomocou internetu to init
         generateQuestion()
     }
 
+    /**
+     * Generuje novú otázku, ak hráč má ešte životy.
+     * Ak životy došli, hra sa reštartuje.
+     */
     fun generateQuestion() {
         if (lives.intValue <= 0) {
             resetGame()
             return
         }
 
+        // s pomocou chatGPT
         val correct = countries.random()
         val options = countries
             .filter { it != correct }
@@ -47,6 +64,14 @@ class QuizViewModel(private val region: Region) : ViewModel() {
         _currentQuestion.value = QuizQuestion(correct, options)
     }
 
+    /**
+     * Spracovanie vybranej odpovede používateľa.
+     *
+     * Zmení skóre, životy a nastaví stav zobrazenia výsledku.
+     *
+     * @param answer Krajina, ktorú používateľ vybral ako odpoveď.
+     * @return true ak bola odpoveď správna, inak false.
+     */
     fun answerSelected(answer: Country): Boolean {
         val isCorrect = answer == _currentQuestion.value?.country
         selectedAnswer.value = answer
@@ -68,6 +93,9 @@ class QuizViewModel(private val region: Region) : ViewModel() {
         return isCorrect
     }
 
+    /**
+     * Reštartuje celú hru — skóre, životy, otázky, odpovede.
+     */
     fun resetGame() {
         score.intValue = 0
         lives.intValue = 3

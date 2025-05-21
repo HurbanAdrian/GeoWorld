@@ -22,26 +22,36 @@ import androidx.compose.ui.unit.sp
 import com.example.geoworld.R
 import com.example.geoworld.model.Region
 
+/**
+ * Obrazovka pre výber regiónu, z ktorého budú otázky v kvíze.
+ *
+ * Umožňuje používateľovi zvoliť geografický región (napr. Európa, Ázia, Afrika, ...),
+ * po čom sa naviguje na obrazovku výberu herného módu.
+ *
+ * @param onNavigate Funkcia pre navigáciu na ďalšiu obrazovku podľa zvoleného regiónu.
+ */
 @Composable
 fun RegionSelectionScreen(onNavigate: (String) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(WindowInsets.statusBars.asPaddingValues())
+            .padding(WindowInsets.statusBars.asPaddingValues())     // status baru
             .padding(horizontal = 16.dp), // horizontálne vycentrovanie
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        // Nadpis obrazovky
         Text(stringResource(R.string.select_region_title), fontSize = 24.sp)
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Tlačidlá pre jednotlivé regióny
         Region.entries.forEach { region ->
             Button(
                 onClick = { onNavigate("game_mode/${region.name}") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
-                shape = RoundedCornerShape(50)
+                shape = RoundedCornerShape(50)      // zaoblený vzhľad tlačidla
             ) {
                 Text(text = stringResource(id = region.labelResId))
             }
@@ -49,6 +59,7 @@ fun RegionSelectionScreen(onNavigate: (String) -> Unit) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Tlačidlo späť do hlavného menu
         Button(
             onClick = { onNavigate("main_menu") },
             shape = RoundedCornerShape(50)

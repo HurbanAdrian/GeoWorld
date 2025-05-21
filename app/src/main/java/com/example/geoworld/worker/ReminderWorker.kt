@@ -9,16 +9,38 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.geoworld.R
 
+/**
+ * Worker, ktorý zobrazuje dennú notifikáciu používateľovi ako pripomienku, že si ešte nezahral.
+ *
+ * Tento worker je naplánovaný pomocou WorkManager-u buď ako jednorazový, alebo periodický task.
+ *
+ * Notifikácia sa zobrazí po spustení pomocou `doWork()` a využíva NotificationManager a NotificationCompat.
+ *
+ * @constructor Vytvára ReminderWorker s daným [context] a parametrami [workerParams].
+ */
 class ReminderWorker(
     context: Context,
     workerParams: WorkerParameters
 ) : Worker(context, workerParams) {
 
+    /**
+     * Hlavná funkcia vykonávaná pri spustení worker-a.
+     * Zavolá zobrazenie notifikácie a vráti úspešný výsledok.
+     */
     override fun doWork(): Result {
         showNotification()
         return Result.success()
     }
 
+    /**
+     * Zobrazí notifikáciu používateľovi.
+     *
+     * Vytvorí notifikačný kanál (pre Android 8+), nastaví titulok, text a ikonu
+     * a následne zaregistruje notifikáciu v NotificationManager-i.
+     *
+     * S pomcou chatGPT upravy
+     * (applicationContext sa používa kvôli tomu, že Worker nemá prístup k Activity Context)
+     */
     private fun showNotification() {
         val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val channelId = "reminder_channel"

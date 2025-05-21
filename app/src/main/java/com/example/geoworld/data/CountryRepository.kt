@@ -4,7 +4,18 @@ import com.example.geoworld.R
 import com.example.geoworld.model.Country
 import com.example.geoworld.model.Region
 
+/**
+ * Objekt, ktorý poskytuje zoznam krajín podľa kontinentu (regiónu).
+ *
+ * Všetky dáta sú staticky definované v zozname [countries].
+ * Každá krajina má svoje ID reťazca (pre názov), ISO kód, referenciu na vlajku a mapu (drawable)
+ * a zaradenie do kontinentu.
+ */
 object CountryRepository {
+    /**
+     * Zoznam všetkých podporovaných krajín v hre.
+     * Obsahuje údaje o názve (string resource), ISO kóde, vlajke, slepej mape a kontinente.
+     */
     val countries = listOf(
         Country(R.string.country_albania, "alb", R.drawable.flag_alb, R.drawable.map_alb, "Europe"),
         Country(R.string.country_andorra, "and", R.drawable.flag_and, R.drawable.map_and, "Europe"),
@@ -80,6 +91,12 @@ object CountryRepository {
         Country(R.string.country_brazil, "bra", R.drawable.flag_bra, R.drawable.map_bra, "America"),
     )
 
+    /**
+     * Získa krajiny prislúchajúce k zvolenému regiónu.
+     *
+     * @param region enum typu [Region], ktorý určuje kontinent
+     * @return zoznam krajín z daného regiónu
+     */
     fun getCountriesByRegion(region: Region): List<Country> {
         return countries.filter { country ->
             when (region) {

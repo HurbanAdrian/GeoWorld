@@ -30,14 +30,27 @@ import com.example.geoworld.data.repository.PlayerStatsRepository
 import com.example.geoworld.viewmodel.StatsViewModel
 import com.example.geoworld.viewmodel.StatsViewModelFactory
 
+/**
+ * Obrazovka zobrazujúca štatistiky hráča ako najvyššie skóre, najobľúbenejší región,
+ * najlepší streak a históriu odohraných hier.
+ *
+ * Umožňuje používateľovi:
+ * - prehliadať štatistiky
+ * - vymazať štatistiky
+ * - vrátiť sa späť do hlavného menu
+ *
+ * @param onNavigate Funkcia pre navigáciu na inú obrazovku.
+ */
 @Composable
 fun StatsScreen(onNavigate: (String) -> Unit) {
     val context = LocalContext.current
+    // Získanie inštancie databázy a repozitára
     val db = AppDatabase.getInstance(context)
     val repository = PlayerStatsRepository(db.playerStatsDao())
     val viewModel: StatsViewModel = viewModel(factory = StatsViewModelFactory(repository))
     val stats by viewModel.stats.collectAsState()
 
+    // Výpočty z dát
     val topScore = stats.maxOfOrNull { it.score } ?: 0
     val favoriteRegion = stats
         .groupingBy { it.region }
@@ -46,6 +59,7 @@ fun StatsScreen(onNavigate: (String) -> Unit) {
         ?.key ?: "—"
     val topStreak = stats.maxOfOrNull { it.streak } ?: 0
 
+    // Načítanie dát pri inicializácii - s pomocou chatGPT
     LaunchedEffect(Unit) {
         viewModel.loadStats()
     }
@@ -58,8 +72,10 @@ fun StatsScreen(onNavigate: (String) -> Unit) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Hlavný nadpis
         Text(stringResource(R.string.player_stats_title), fontSize = 24.sp)
 
+        // Top metriky
         Text(stringResource(R.string.top_score_label, topScore))
         Spacer(modifier = Modifier.height(4.dp))
         Text(stringResource(R.string.favorite_region_label, favoriteRegion))
@@ -70,6 +86,7 @@ fun StatsScreen(onNavigate: (String) -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Tlačidlá na návrat alebo vymazanie
         Button(onClick = { onNavigate("main_menu") }) {
             Text(stringResource(R.string.back_to_menu_button))
         }
@@ -79,6 +96,7 @@ fun StatsScreen(onNavigate: (String) -> Unit) {
         }
 
         Spacer(modifier = Modifier.height(24.dp))
+        // Výpis štatistík alebo fallback text
         if (stats.isEmpty()) {
             Text(stringResource(R.string.no_results_label))
         } else {
@@ -98,6 +116,15 @@ fun StatsScreen(onNavigate: (String) -> Unit) {
     }
 }
 
+
+/**
+ * Pomocná funkcia na formátovanie timestampu do čitateľného dátumu.
+ *
+ * @param timestamp Čas v milisekundách
+ * @return Formátovaný reťazec ako "dd.MM.yyyy HH:mm"
+ *
+ * S pomocou chatGPT
+ */
 fun formatDate(timestamp: Long): String {
     val sdf = java.text.SimpleDateFormat("dd.MM.yyyy HH:mm", java.util.Locale.getDefault())
     return sdf.format(java.util.Date(timestamp))
