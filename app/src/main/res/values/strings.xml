@@ -111,4 +111,5 @@
 
     <string name="game_over_label">Hra skončila</string>
     <string name="play_again_button">Znova hrať</string>
+    <string name="globe_description">Obrázok glóbusu</string>
 </resources>

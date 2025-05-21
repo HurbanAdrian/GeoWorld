@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
@@ -22,6 +23,7 @@ private val LightColorScheme = lightColorScheme(
     secondary = PurpleGrey40,
     tertiary = Pink40
 
+
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
@@ -31,6 +33,14 @@ private val LightColorScheme = lightColorScheme(
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
     */
+)
+
+private val CustomColorScheme = lightColorScheme(
+    primary = Color(0xFF4CAF50),
+    onPrimary = Color.White,
+    secondary = Color(0xFFFF9800),
+    background = Color(0xFFF0F0F0),
+    surface = Color.White,
 )
 
 @Composable
@@ -51,8 +61,9 @@ fun GeoWorldTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = CustomColorScheme,
         typography = Typography,
+        //shapes = Shapes,
         content = content
     )
 }

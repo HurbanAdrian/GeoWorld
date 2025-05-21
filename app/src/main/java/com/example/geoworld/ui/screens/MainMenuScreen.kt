@@ -6,7 +6,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
 import android.app.Activity
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.example.geoworld.R
 
@@ -25,10 +29,20 @@ fun MainMenuScreen(onNavigate: (String) -> Unit) {
     val context = LocalContext.current
     val activity = context as? Activity
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.globe),
+            contentDescription = stringResource(R.string.globe_description),
+            modifier = Modifier
+                .size(180.dp)
+                .padding(bottom = 24.dp)
+        )
+
         // Nadpis menu
         Text(stringResource(R.string.main_menu_title), fontSize = 24.sp)
         Spacer(modifier = Modifier.height(16.dp))
