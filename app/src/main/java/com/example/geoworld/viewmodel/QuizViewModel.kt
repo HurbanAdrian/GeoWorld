@@ -74,6 +74,10 @@ class QuizViewModel(private val region: Region) : ViewModel() {
         streak.intValue = 0
         correctAnswers.intValue = 0
         gameOver.value = false
-        generateQuestion()
+
+        selectedAnswer.value = null
+        showResult.value = false
+
+        //generateQuestion()
     }
 }

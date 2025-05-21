@@ -66,7 +66,7 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
         if (viewModel.gameOver.value) {
             val intent = Intent(context, StatsService::class.java)
             context.startService(intent)
-            viewModel.resetGame()
+            //viewModel.resetGame()
         }
     }
 
@@ -168,7 +168,16 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            if (showResult) {
+            if (viewModel.gameOver.value) {
+                Text(text = stringResource(R.string.game_over_label), fontSize = 20.sp, color = Color.Red)
+                Spacer(modifier = Modifier.height(12.dp))
+                Button(onClick = {
+                    viewModel.resetGame()
+                    viewModel.generateQuestion()
+                }) {
+                    Text(stringResource(R.string.play_again_button))
+                }
+            } else if (showResult) {
                 Button(
                     onClick = {
                         viewModel.generateQuestion()

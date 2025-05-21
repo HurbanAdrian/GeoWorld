@@ -29,7 +29,7 @@
     <string name="country_latvia">Lotyšsko</string>
     <string name="country_monaco">Monako</string>
     <string name="country_moldova">Moldavsko</string>
-    <string name="country_north_macedonia">Severné Makedónsko</string>
+    <string name="country_north_macedonia">Severné Macedónsko</string>
     <string name="country_malta">Malta</string>
     <string name="country_montenegro">Čierna Hora</string>
     <string name="country_netherlands">Holandsko</string>
@@ -108,4 +108,7 @@
     <string name="notification_title">GeoWorld</string>
     <string name="notification_text">Dnes si ešte nehral</string>
     <string name="notification_channel_name">Denné pripomenutie</string>
+
+    <string name="game_over_label">Hra skončila</string>
+    <string name="play_again_button">Znova hrať</string>
 </resources>
