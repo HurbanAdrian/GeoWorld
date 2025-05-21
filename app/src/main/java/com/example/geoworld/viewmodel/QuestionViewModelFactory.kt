@@ -11,6 +11,6 @@ class QuizViewModelFactory(private val region: Region) : ViewModelProvider.Facto
         if (modelClass.isAssignableFrom(QuizViewModel::class.java)) {
             return QuizViewModel(region) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+        throw IllegalArgumentException("Unknown ViewModel class")       // nie ako zdroj text je to pre Debug
     }
 }

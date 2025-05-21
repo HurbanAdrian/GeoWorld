@@ -16,8 +16,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.geoworld.R
 import com.example.geoworld.model.Region
 
 @Composable
@@ -30,7 +32,7 @@ fun RegionSelectionScreen(onNavigate: (String) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Vyber región", fontSize = 24.sp)
+        Text(stringResource(R.string.select_region_title), fontSize = 24.sp)
         Spacer(modifier = Modifier.height(24.dp))
 
         Region.entries.forEach { region ->
@@ -41,7 +43,7 @@ fun RegionSelectionScreen(onNavigate: (String) -> Unit) {
                     .padding(vertical = 4.dp),
                 shape = RoundedCornerShape(50)
             ) {
-                Text(region.label)
+                Text(text = stringResource(id = region.labelResId))
             }
         }
 
@@ -51,7 +53,7 @@ fun RegionSelectionScreen(onNavigate: (String) -> Unit) {
             onClick = { onNavigate("main_menu") },
             shape = RoundedCornerShape(50)
         ) {
-            Text("Späť")
+            Text(stringResource(R.string.back))
         }
     }
 }

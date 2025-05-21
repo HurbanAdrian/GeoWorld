@@ -16,8 +16,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.geoworld.R
 import com.example.geoworld.model.GameMode
 import com.example.geoworld.model.Region
 
@@ -33,7 +35,7 @@ fun GameModeScreen(regionName: String?, onNavigate: (String) -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Vyber herný mód", fontSize = 24.sp)
+        Text(stringResource(R.string.choose_game_mode), fontSize = 24.sp)
         Spacer(modifier = Modifier.height(24.dp))
 
         GameMode.entries.forEach { mode ->
@@ -46,7 +48,7 @@ fun GameModeScreen(regionName: String?, onNavigate: (String) -> Unit) {
                     .padding(vertical = 4.dp),
                 shape = RoundedCornerShape(50)
             ) {
-                Text(mode.label)
+                Text(text = stringResource(id = mode.labelResId))
             }
         }
 
@@ -55,7 +57,7 @@ fun GameModeScreen(regionName: String?, onNavigate: (String) -> Unit) {
             onClick = { onNavigate("region_selection") },
             shape = RoundedCornerShape(50)
         ) {
-            Text("Späť")
+            Text(stringResource(R.string.back))
         }
     }
 }

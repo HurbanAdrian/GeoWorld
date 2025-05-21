@@ -24,14 +24,15 @@ class ReminderWorker(
         val channelId = "reminder_channel"
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, "Daily Reminder", NotificationManager.IMPORTANCE_DEFAULT)
+            val channelName = applicationContext.getString(R.string.notification_channel_name)
+            val channel = NotificationChannel(channelId, channelName, NotificationManager.IMPORTANCE_DEFAULT)
             notificationManager.createNotificationChannel(channel)
         }
 
         val builder = NotificationCompat.Builder(applicationContext, channelId)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("GeoWorld")
-            .setContentText("Dnes si ešte nehral...")
+            .setContentTitle(applicationContext.getString(R.string.notification_title))         //applicationContext lebo inac sa nedostaneme ku contextu alebo activity
+            .setContentText(applicationContext.getString(R.string.notification_text))       // worker > context.getString
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         // treba addnut permission

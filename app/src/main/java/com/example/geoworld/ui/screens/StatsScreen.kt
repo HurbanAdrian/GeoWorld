@@ -20,9 +20,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.geoworld.R
 import com.example.geoworld.data.database.AppDatabase
 import com.example.geoworld.data.repository.PlayerStatsRepository
 import com.example.geoworld.viewmodel.StatsViewModel
@@ -56,32 +58,39 @@ fun StatsScreen(onNavigate: (String) -> Unit) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Štatistiky hráča", fontSize = 24.sp)
+        Text(stringResource(R.string.player_stats_title), fontSize = 24.sp)
 
-        Text("📈 Top skóre: $topScore")
+        Text(stringResource(R.string.top_score_label, topScore))
         Spacer(modifier = Modifier.height(4.dp))
-        Text("🌍 Najčastejší región: $favoriteRegion")
+        Text(stringResource(R.string.favorite_region_label, favoriteRegion))
         Spacer(modifier = Modifier.height(4.dp))
-        Text("🔥 Najvyšší streak: $topStreak")
+        Text(stringResource(R.string.top_streak_label, topStreak))
         Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider(thickness = 1.dp)
         Spacer(modifier = Modifier.height(16.dp))
         Spacer(modifier = Modifier.height(16.dp))
 
         Button(onClick = { onNavigate("main_menu") }) {
-            Text("Späť na menu")
+            Text(stringResource(R.string.back_to_menu_button))
         }
 
         Button(onClick = { viewModel.clearStats() }) {
-            Text("Vymazať štatistiky")
+            Text(stringResource(R.string.clear_stats_button))
         }
 
         Spacer(modifier = Modifier.height(24.dp))
         if (stats.isEmpty()) {
-            Text("Zatiaľ žiadne výsledky")
+            Text(stringResource(R.string.no_results_label))
         } else {
             stats.forEach {
-                Text("Skóre: ${it.score}, Správne odp.: ${it.correctAnswers}, Dátum: ${formatDate(it.date)}")
+                Text(
+                    stringResource(
+                        R.string.result_entry_template,
+                        it.score,
+                        it.correctAnswers,
+                        formatDate(it.date)
+                    )
+                )
                 Spacer(modifier = Modifier.height(8.dp))
             }
         }

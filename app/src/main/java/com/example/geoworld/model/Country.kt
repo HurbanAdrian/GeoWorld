@@ -1,7 +1,9 @@
 package com.example.geoworld.model
 
+import androidx.annotation.StringRes
+
 data class Country(
-    val name: String,
+    @StringRes val nameResId: Int,
     val isoCode: String,
     val flagResId: Int,
     val mapResId: Int,

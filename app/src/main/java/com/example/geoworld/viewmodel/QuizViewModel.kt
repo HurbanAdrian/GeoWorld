@@ -1,6 +1,5 @@
 package com.example.geoworld.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -57,7 +56,7 @@ class QuizViewModel(private val region: Region) : ViewModel() {
             score.intValue += 1
             streak.intValue += 1
             correctAnswers.intValue += 1
-            Log.d("QUIZ", "Skóre zvýšené na ${score.intValue}")
+            //Log.d("QUIZ", "Skóre zvýšené na ${score.intValue}")
         } else {
             lives.intValue -= 1
             streak.intValue = 0

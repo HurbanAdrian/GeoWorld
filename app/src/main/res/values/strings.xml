@@ -1,3 +1,111 @@
 <resources>
     <string name="app_name">GeoWorld</string>
+
+    <string name="country_albania">Albánsko</string>
+    <string name="country_andorra">Andorra</string>
+    <string name="country_austria">Rakúsko</string>
+    <string name="country_belgium">Belgicko</string>
+    <string name="country_bulgaria">Bulharsko</string>
+    <string name="country_bosnia_and_herzegovina">Bosna a Hercegovina</string>
+    <string name="country_belarus">Bielorusko</string>
+    <string name="country_switzerland">Švajčiarsko</string>
+    <string name="country_czech_republic">Česká republika</string>
+    <string name="country_germany">Nemecko</string>
+    <string name="country_denmark">Dánsko</string>
+    <string name="country_spain">Španielsko</string>
+    <string name="country_estonia">Estónsko</string>
+    <string name="country_finland">Fínsko</string>
+    <string name="country_france">Francúzsko</string>
+    <string name="country_united_kingdom">Spojené kráľovstvo</string>
+    <string name="country_greece">Grécko</string>
+    <string name="country_croatia">Chorvátsko</string>
+    <string name="country_hungary">Maďarsko</string>
+    <string name="country_ireland">Írsko</string>
+    <string name="country_iceland">Island</string>
+    <string name="country_italy">Taliansko</string>
+    <string name="country_liechtenstein">Lichtenštajnsko</string>
+    <string name="country_lithuania">Litva</string>
+    <string name="country_luxembourg">Luxembursko</string>
+    <string name="country_latvia">Lotyšsko</string>
+    <string name="country_monaco">Monako</string>
+    <string name="country_moldova">Moldavsko</string>
+    <string name="country_north_macedonia">Severné Makedónsko</string>
+    <string name="country_malta">Malta</string>
+    <string name="country_montenegro">Čierna Hora</string>
+    <string name="country_netherlands">Holandsko</string>
+    <string name="country_norway">Nórsko</string>
+    <string name="country_poland">Poľsko</string>
+    <string name="country_portugal">Portugalsko</string>
+    <string name="country_romania">Rumunsko</string>
+    <string name="country_russia">Rusko</string>
+    <string name="country_san_marino">San Maríno</string>
+    <string name="country_serbia">Srbsko</string>
+    <string name="country_slovakia">Slovensko</string>
+    <string name="country_slovenia">Slovinsko</string>
+    <string name="country_sweden">Švédsko</string>
+    <string name="country_turkey">Turecko</string>
+    <string name="country_ukraine">Ukrajina</string>
+    <string name="country_vatican_city">Vatikán</string>
+
+    <string name="country_algeria">Alžírsko</string>
+    <string name="country_egypt">Egypt</string>
+    <string name="country_ethiopia">Etiópia</string>
+    <string name="country_nigeria">Nigéria</string>
+    <string name="country_south_africa">Južná Afrika</string>
+
+    <string name="country_china">Čína</string>
+    <string name="country_japan">Japonsko</string>
+    <string name="country_mongolia">Mongolsko</string>
+    <string name="country_south_korea">Južná Kórea</string>
+    <string name="country_vietnam">Vietnam</string>
+
+    <string name="country_fiji">Fidži</string>
+    <string name="country_vanuatu">Vanuatu</string>
+    <string name="country_australia">Austrália</string>
+    <string name="country_new_zealand">Nový Zéland</string>
+
+    <string name="country_canada">Kanada</string>
+    <string name="country_mexico">Mexiko</string>
+    <string name="country_united_states">Spojené štáty</string>
+    <string name="country_argentina">Argentína</string>
+    <string name="country_brazil">Brazília</string>
+
+    <string name="game_mode_flags">Vlajky</string>
+    <string name="game_mode_maps">Slepá mapa</string>
+
+    <string name="region_europe">Európa</string>
+    <string name="region_asia">Ázia</string>
+    <string name="region_africa">Afrika</string>
+    <string name="region_america">Amerika</string>
+    <string name="region_oceania">Oceánia</string>
+
+    <string name="log_inactivity">Používateľ prestal hrať - obrazovka vypnutá</string>
+    <string name="log_top_score">Top skóre pre hráča: %1$d</string>
+    <string name="choose_game_mode">Vyber herný mód</string>
+    <string name="back">Späť</string>
+
+    <string name="main_menu_title">Hlavné menu</string>
+    <string name="start_game_button">Začať hru</string>
+    <string name="stats_button">Štatistiky</string>
+    <string name="exit_game_button">Ukončiť hru</string>
+
+    <string name="lives_label">❤️ Životy:</string>
+    <string name="score_label">🏆 Skóre:</string>
+    <string name="question_flag_prompt">Ktorá vlajka patrí krajine:</string>
+    <string name="question_map_prompt">Ktorá mapa patrí krajine:</string>
+    <string name="next_question_button">Ďalšia otázka</string>
+    <string name="select_region_title">Vyber región</string>
+
+    <string name="player_stats_title">Štatistiky hráča</string>
+    <string name="top_score_label">📈 Top skóre: %1$d</string>
+    <string name="favorite_region_label">🌍 Najčastejší región: %1$s</string>
+    <string name="top_streak_label">🔥 Najvyšší streak: %1$d</string>
+    <string name="back_to_menu_button">Späť do menu</string>
+    <string name="clear_stats_button">Vymazať štatistiky</string>
+    <string name="no_results_label">Zatiaľ žiadne výsledky</string>
+    <string name="result_entry_template">Skóre: %1$d, Správne odp.: %2$d, Dátum: %3$s</string>
+
+    <string name="notification_title">GeoWorld</string>
+    <string name="notification_text">Dnes si ešte nehral</string>
+    <string name="notification_channel_name">Denné pripomenutie</string>
 </resources>

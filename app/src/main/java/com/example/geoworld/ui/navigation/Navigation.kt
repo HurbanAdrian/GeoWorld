@@ -16,7 +16,7 @@ import com.example.geoworld.ui.screens.StatsScreen
 fun GeoWorldNavHost(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "main_menu"
+        startDestination = "main_menu"      // routy nedavam do resources
     ) {
         composable("main_menu") {
             MainMenuScreen(onNavigate = { navController.navigate(it) })
@@ -26,13 +26,13 @@ fun GeoWorldNavHost(navController: NavHostController) {
             RegionSelectionScreen(onNavigate = { navController.navigate(it) })
         }
 
-        composable("game_mode/{region}") { backStackEntry ->
+        composable("game_mode/{region}") { backStackEntry ->                    // navigacna route sablona
             val region = backStackEntry.arguments?.getString("region")
             GameModeScreen(regionName = region, onNavigate = { navController.navigate(it) })
         }
 
         composable("quiz/{region}/{mode}") { backStackEntry ->
-            val region = Region.valueOf(backStackEntry.arguments?.getString("region") ?: "EUROPE")
+            val region = Region.valueOf(backStackEntry.arguments?.getString("region") ?: "EUROPE")      // na enumy
             val mode = GameMode.valueOf(backStackEntry.arguments?.getString("mode") ?: "FLAGS")
             QuizScreen(region = region, mode = mode, onNavigate = { navController.navigate(it) })
         }

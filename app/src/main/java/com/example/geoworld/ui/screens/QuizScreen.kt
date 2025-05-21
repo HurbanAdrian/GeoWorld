@@ -33,9 +33,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.geoworld.R
 import com.example.geoworld.data.database.AppDatabase
 import com.example.geoworld.data.database.entity.PlayerStatsEntity
 import com.example.geoworld.data.repository.PlayerStatsRepository
@@ -107,21 +109,21 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
                     .padding(bottom = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text("❤️ Životy: ${viewModel.lives.intValue}")
-                Text("🏆 Skóre: ${viewModel.score.intValue}")
+                Text("${stringResource(R.string.lives_label)} ${viewModel.lives.intValue}")
+                Text("${stringResource(R.string.score_label)} ${viewModel.score.intValue}")
             }
 
             Text(
                 text = when (mode) {
-                    GameMode.FLAGS -> "Ktorá vlajka patrí krajine:"
-                    GameMode.MAPS -> "Ktorá mapa patrí krajine:"
+                    GameMode.FLAGS -> stringResource(R.string.question_flag_prompt)
+                    GameMode.MAPS -> stringResource(R.string.question_map_prompt)
                 },
                 fontSize = 20.sp
             )
 
             Spacer(modifier = Modifier.height(4.dp))
 
-            Text(text = q.country.name, fontSize = 28.sp)
+            Text(text = stringResource(id = q.country.nameResId), fontSize = 28.sp)
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -158,7 +160,7 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
                 ) {
                     Image(
                         painter = painterResource(id = imageResId),
-                        contentDescription = option.name,
+                        contentDescription = stringResource(id = option.nameResId),
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -174,14 +176,14 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
                         showResult = false
                     }
                 ) {
-                    Text("Ďalšia otázka")
+                    Text(stringResource(R.string.next_question_button))
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(onClick = { onNavigate("main_menu") }) {
-                Text("Ukončiť hru")
+                Text(stringResource(R.string.exit_game_button))
             }
         }
     }

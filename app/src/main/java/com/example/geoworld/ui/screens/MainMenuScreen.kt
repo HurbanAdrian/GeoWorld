@@ -7,6 +7,8 @@ import androidx.compose.ui.*
 import androidx.compose.ui.unit.*
 import android.app.Activity
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.example.geoworld.R
 
 @Composable
 fun MainMenuScreen(onNavigate: (String) -> Unit) {
@@ -17,21 +19,21 @@ fun MainMenuScreen(onNavigate: (String) -> Unit) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Main Menu", fontSize = 24.sp)
+        Text(stringResource(R.string.main_menu_title), fontSize = 24.sp)
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = { onNavigate("region_selection") }) {
-            Text("Začať hru")
+            Text(stringResource(R.string.start_game_button))
         }
         Spacer(modifier = Modifier.height(8.dp))
         Button(onClick = { onNavigate("stats") }) {
-            Text("Štatistiky")
+            Text(stringResource(R.string.stats_button))
         }
         Spacer(modifier = Modifier.height(8.dp))
 
         Button(onClick = {
             activity?.finish()
         }) {
-            Text("Ukončiť hru")
+            Text(stringResource(R.string.exit_game_button))
         }
     }
 }
