@@ -2,6 +2,7 @@ package com.example.geoworld.viewmodel
 
 import android.util.Log
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.geoworld.model.QuizQuestion
 import com.example.geoworld.data.CountryRepository
@@ -18,6 +19,7 @@ class QuizViewModel(private val region: Region) : ViewModel() {
     val streak = mutableIntStateOf(0)
     val lives = mutableIntStateOf(3)
     val correctAnswers = mutableIntStateOf(0)
+    val gameOver = mutableStateOf(false)
 
     private val _currentQuestion = MutableStateFlow<QuizQuestion?>(null)
     val currentQuestion: StateFlow<QuizQuestion?> = _currentQuestion
@@ -54,6 +56,9 @@ class QuizViewModel(private val region: Region) : ViewModel() {
         } else {
             lives.intValue -= 1
             streak.intValue = 0
+            if (lives.intValue <= 0) {
+                gameOver.value = true
+            }
         }
 
         return isCorrect
@@ -64,6 +69,7 @@ class QuizViewModel(private val region: Region) : ViewModel() {
         lives.intValue = 3
         streak.intValue = 0
         correctAnswers.intValue = 0
+        gameOver.value = false
         generateQuestion()
     }
 }

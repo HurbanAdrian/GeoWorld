@@ -1,5 +1,6 @@
 package com.example.geoworld.ui.screens
 
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -41,6 +42,7 @@ import com.example.geoworld.data.repository.PlayerStatsRepository
 import com.example.geoworld.model.Country
 import com.example.geoworld.model.GameMode
 import com.example.geoworld.model.Region
+import com.example.geoworld.service.StatsService
 import com.example.geoworld.viewmodel.QuizViewModel
 import com.example.geoworld.viewmodel.StatsViewModel
 import com.example.geoworld.viewmodel.StatsViewModelFactory
@@ -56,6 +58,14 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
     var showResult by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
+    LaunchedEffect(viewModel.gameOver.value) {              // ako side effect, pri zmene gameOver spusti raz tento blok, ide ako coroutina
+        if (viewModel.gameOver.value) {
+            val intent = Intent(context, StatsService::class.java)
+            context.startService(intent)
+            viewModel.resetGame()
+        }
+    }
+
     val statsViewModel: StatsViewModel = viewModel(
         factory = StatsViewModelFactory(
             PlayerStatsRepository(AppDatabase.getInstance(context).playerStatsDao())
@@ -72,8 +82,8 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
                     correctAnswers = if (isCorrect) 1 else 0,
                     date = System.currentTimeMillis(),
                     region = region.name,
-                    streak = viewModel.streak.value,
-                    livesLeft = viewModel.lives.value
+                    streak = viewModel.streak.intValue,
+                    livesLeft = viewModel.lives.intValue
                 )
                 statsViewModel.insertStat(stat)
             }
@@ -94,7 +104,7 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
                     .padding(bottom = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text("❤️ Životy: ${viewModel.lives.value}")
+                Text("❤️ Životy: ${viewModel.lives.intValue}")
                 Text("🏆 Skóre: ${viewModel.score.intValue}")
             }
 

@@ -13,4 +13,7 @@ interface PlayerStatsDao {
 
     @Query("DELETE FROM player_stats")
     suspend fun deleteAllStats()
+
+    @Query("SELECT * FROM player_stats")
+    fun getAllStatsBlocking(): List<PlayerStatsEntity>
 }
