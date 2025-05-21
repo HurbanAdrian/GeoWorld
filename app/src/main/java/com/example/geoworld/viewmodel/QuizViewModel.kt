@@ -24,6 +24,9 @@ class QuizViewModel(private val region: Region) : ViewModel() {
     private val _currentQuestion = MutableStateFlow<QuizQuestion?>(null)
     val currentQuestion: StateFlow<QuizQuestion?> = _currentQuestion
 
+    val selectedAnswer = mutableStateOf<Country?>(null)
+    val showResult = mutableStateOf(false)
+
     init {
         generateQuestion()
     }
@@ -47,6 +50,8 @@ class QuizViewModel(private val region: Region) : ViewModel() {
 
     fun answerSelected(answer: Country): Boolean {
         val isCorrect = answer == _currentQuestion.value?.country
+        selectedAnswer.value = answer
+        showResult.value = true
 
         if (isCorrect) {
             score.intValue += 1

@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -26,8 +28,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,11 +39,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.geoworld.data.database.AppDatabase
 import com.example.geoworld.data.database.entity.PlayerStatsEntity
 import com.example.geoworld.data.repository.PlayerStatsRepository
-import com.example.geoworld.model.Country
 import com.example.geoworld.model.GameMode
 import com.example.geoworld.model.Region
 import com.example.geoworld.service.StatsService
 import com.example.geoworld.viewmodel.QuizViewModel
+import com.example.geoworld.viewmodel.QuizViewModelFactory
 import com.example.geoworld.viewmodel.StatsViewModel
 import com.example.geoworld.viewmodel.StatsViewModelFactory
 import kotlinx.coroutines.delay
@@ -51,11 +51,13 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
-    val viewModel: QuizViewModel = remember { QuizViewModel(region) }
+    val viewModel: QuizViewModel = viewModel(
+        factory = QuizViewModelFactory(region)
+    )
     val question by viewModel.currentQuestion.collectAsState()
 
-    var selectedAnswer by remember { mutableStateOf<Country?>(null) }
-    var showResult by remember { mutableStateOf(false) }
+    var selectedAnswer by viewModel.selectedAnswer
+    var showResult by viewModel.showResult
 
     val context = LocalContext.current
     LaunchedEffect(viewModel.gameOver.value) {              // ako side effect, pri zmene gameOver spusti raz tento blok, ide ako coroutina
@@ -91,7 +93,8 @@ fun QuizScreen(region: Region, mode: GameMode, onNavigate: (String) -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(WindowInsets.statusBars.asPaddingValues()) // odsun od výrezu/notchu
+                .verticalScroll(rememberScrollState())
+                .padding(WindowInsets.statusBars.asPaddingValues())         // odsun od výrezu/notchu
                 .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
